@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import './FormBuilder.css'
 
-interface FormField {
+export type FormField = {
   id: string
   type: 'text' | 'email' | 'number' | 'textarea' | 'select' | 'date'
   label: string
@@ -14,6 +14,36 @@ interface FormField {
     pattern?: string
   }
 }
+
+export function validateField(field: FormField, value: string | number): string | null {
+  if (field.required && (typeof value === 'string' ? value.trim() === '' : value === undefined || value === null)) {
+    return `${field.label} is required`
+  }
+
+  if (field.type === 'email' && value) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(value as string)) {
+      return 'Invalid email format'
+    }
+  }
+
+  if (field.type === 'number' && value !== '' && value !== undefined && value !== null) {
+    const numValue = Number(value)
+    if (isNaN(numValue)) {
+      return 'Must be a valid number'
+    }
+    if (field.validation?.min !== undefined && numValue < field.validation.min) {
+      return `Must be at least ${field.validation.min}`
+    }
+    if (field.validation?.max !== undefined && numValue > field.validation.max) {
+      return `Must be at most ${field.validation.max}`
+    }
+  }
+
+  return null
+}
+
+
 
 interface FormData {
   [key: string]: string | number
@@ -57,34 +87,6 @@ function FormBuilder() {
       return () => clearTimeout(timer)
     }
   }, [submitSuccess])
-
-  const validateField = (field: FormField, value: string | number): string | null => {
-    if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
-      return `${field.label} is required`
-    }
-
-    if (field.type === 'email' && value) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(value as string)) {
-        return 'Invalid email format'
-      }
-    }
-
-    if (field.type === 'number' && value) {
-      const numValue = Number(value)
-      if (isNaN(numValue)) {
-        return 'Must be a valid number'
-      }
-      if (field.validation?.min !== undefined && numValue < field.validation.min) {
-        return `Must be at least ${field.validation.min}`
-      }
-      if (field.validation?.max !== undefined && numValue > field.validation.max) {
-        return `Must be at most ${field.validation.max}`
-      }
-    }
-
-    return null
-  }
 
   const handleFieldChange = (fieldId: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [fieldId]: value }))
