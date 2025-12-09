@@ -73,7 +73,12 @@ function DataTable() {
     return result
   }, [data, filterText, filterRole, sortColumn, sortDirection])
 
-  const totalPages = Math.ceil(filteredAndSortedData.length / pageSize)
+  const totalPages = Math.max(1, Math.ceil(filteredAndSortedData.length / pageSize))
+  // Ensure currentPage is within bounds when filters or page size change
+  if (currentPage > totalPages) {
+    setCurrentPage(totalPages)
+  }
+
   const paginatedData = filteredAndSortedData.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
@@ -181,22 +186,58 @@ function DataTable() {
                   onChange={(e) => handleSelectAll(e.target.checked)}
                 />
               </th>
-              <th onClick={() => handleSort('id')} className="sortable">
+              <th
+                onClick={() => handleSort('id')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('id') }}
+                role="button"
+                tabIndex={0}
+                className="sortable"
+              >
                 ID {sortColumn === 'id' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
-              <th onClick={() => handleSort('name')} className="sortable">
+              <th
+                onClick={() => handleSort('name')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('name') }}
+                role="button"
+                tabIndex={0}
+                className="sortable"
+              >
                 Name {sortColumn === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
-              <th onClick={() => handleSort('email')} className="sortable">
+              <th
+                onClick={() => handleSort('email')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('email') }}
+                role="button"
+                tabIndex={0}
+                className="sortable"
+              >
                 Email {sortColumn === 'email' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
-              <th onClick={() => handleSort('role')} className="sortable">
+              <th
+                onClick={() => handleSort('role')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('role') }}
+                role="button"
+                tabIndex={0}
+                className="sortable"
+              >
                 Role {sortColumn === 'role' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
-              <th onClick={() => handleSort('status')} className="sortable">
+              <th
+                onClick={() => handleSort('status')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('status') }}
+                role="button"
+                tabIndex={0}
+                className="sortable"
+              >
                 Status {sortColumn === 'status' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
-              <th onClick={() => handleSort('revenue')} className="sortable">
+              <th
+                onClick={() => handleSort('revenue')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('revenue') }}
+                role="button"
+                tabIndex={0}
+                className="sortable"
+              >
                 Revenue {sortColumn === 'revenue' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
             </tr>

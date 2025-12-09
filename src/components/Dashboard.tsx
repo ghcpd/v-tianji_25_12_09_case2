@@ -15,7 +15,8 @@ interface DashboardData {
 function Dashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState<'day' | 'week' | 'month'>('week')
   const { data, loading, error, refetch } = useAsyncData<DashboardData>(
-    () => fetchDashboardData(selectedPeriod)
+    () => fetchDashboardData(selectedPeriod),
+    [selectedPeriod]
   )
 
   const [notifications, setNotifications] = useState<any[]>([])
@@ -28,7 +29,7 @@ function Dashboard() {
           const combined = [...prev, ...newNotifications]
           return combined.slice(-50)
         })
-        setNotificationCount(newNotifications.length)
+        setNotificationCount(prev => prev + newNotifications.length)
       })
     }, 5000)
 
