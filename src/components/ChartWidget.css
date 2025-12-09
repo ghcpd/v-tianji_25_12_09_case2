@@ -1,0 +1,58 @@
+.chart-widget {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.chart-period {
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: capitalize;
+  padding: 0.25rem 0.75rem;
+  background: #f0f0f0;
+  border-radius: 12px;
+}
+
+.chart-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+.chart-svg {
+  width: 100%;
+  height: 200px;
+  min-width: 480px;
+}
+
+.chart-bar {
+  transition: fill 0.2s;
+  cursor: pointer;
+}
+
+.chart-bar:hover {
+  fill: #764ba2;
+}
+
+.chart-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #666;
+}
+
