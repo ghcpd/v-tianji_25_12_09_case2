@@ -1,0 +1,25 @@
+Prompt
+
+Find all UI/UX bugs in this codebase. Your task is to:
+
+Identify every UI/UX bug through systematic review and interaction
+
+For each bug, document the following:
+
+Component name
+
+Bug description
+
+Steps to reproduce
+
+Generate executable test cases that can reliably verify the bug
+
+Run all generated test cases to confirm they pass
+
+Output a summary report to a Markdown file containing all findings
+
+Title
+UI/UX Bug Analysis and Verification Guide
+
+Description
+A structured prompt for identifying UI/UX issues in a codebase, generating executable tests that validate them, verifying the results, and producing a final summarized report in Markdown format containing all findings and reproduction steps.
